@@ -1,0 +1,27 @@
+body,
+html,
+input {
+  background-color: black;
+  color: rgb(128, 255, 0);
+  font-family: "Source Sans Pro", sans-serif;
+}
+#app {
+  width: 750px;
+  margin: 130px auto auto auto;
+  border: 2px solid red;
+}
+p,
+span,
+input {
+  font-size: 30px;
+  line-height: 15px;
+}
+.input {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 10px;
+}
+#inputSign {
+  display: flex;
+  align-items: center;
+}

@@ -1,10 +1,1 @@
-body,
-html {
-  background-color: black;
-  color: rgb(128, 255, 0);
-}
-#app {
-  border: 2px solid red;
-  width: 750px;
-  margin: auto;
-}
+@import "./scss/global.scss";
