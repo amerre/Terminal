@@ -22,12 +22,22 @@ export default {
   },
   data() {
     return {
-      display: [""]
+      display: ["Type 'help' if you're lost, and 'demo' to see something cool!"]
     };
   },
   methods: {
     submit() {
-      this.display.push(this.getInput);
+      switch (this.getInput) {
+        case "help":
+          this.display.push("What can I do for you?");
+          break;
+        case "demo":
+          this.display.push("Hey, this is a demo!");
+          break;
+        default:
+          this.display.push(this.getInput);
+          break;
+      }
       this.getInput = "";
     }
   }
