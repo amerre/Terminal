@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentPath: "/",
-    logs: ["This is the logs"],
+    logs: ["Commands availables : cd, ls"],
     input: "",
     files: {
       dir1: ["file1", "file2"],

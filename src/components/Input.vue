@@ -49,14 +49,30 @@ export default {
     submit() {
       let vm = this;
       let directories = this.$store.state.files;
+      let parentDirectory = "/";
 
+      // Navigation
       Object.keys(directories).forEach(function(element) {
-        if (vm.getInput === "cd " + element) {
-          console.log(`You typed cd ${element}`);
-        } else if (vm.getInput === "cd /") {
-          console.log(`You typed cd /`);
+        switch (vm.getInput) {
+          case "cd " + element:
+            console.log(`You typed cd ${element}`);
+            vm.getCurrentPath = `/${element}`;
+            break;
+          case "cd /":
+            console.log(`You typed cd /`);
+            vm.getCurrentPath = `/`;
+            break;
+          case "cd ..":
+          case "cd":
+            console.log(`You typed cd ..`);
+            vm.getCurrentPath = parentDirectory;
+            break;
         }
       });
+      // Creation
+      if (vm.getInput.startsWith("mkdir ")) {
+        // Create a dir
+      }
 
       this.getInput = "";
     }
