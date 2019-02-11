@@ -1,16 +1,22 @@
 <template>
   <div>
-    <p v-for="lines in display" v-bind:key="lines">{{ lines }}</p>
+    <Logs/>
     <span class="input">
-      <span id="inputSign">></span>
+      >
       <input type="text" v-model="getInput" @keydown.enter="submit" autofocus>
     </span>
   </div>
 </template>
 
 <script>
+import Logs from "./Logs";
+
 export default {
+  components: {
+    Logs
+  },
   computed: {
+    // Get what's typed
     getInput: {
       get() {
         return this.$store.state.input;
@@ -18,24 +24,29 @@ export default {
       set(value) {
         this.$store.commit("INPUT_COMMIT", value);
       }
+    },
+    // Get what displayed on the logs
+    getLogs: {
+      get() {
+        return this.$store.state.logs;
+      },
+      set(value) {
+        this.$store.commit("LOGS_COMMIT", value);
+      }
     }
   },
-  data() {
-    return {
-      display: ["Type 'help' if you're lost, and 'demo' to see something cool!"]
-    };
-  },
   methods: {
+    // When the user is pressing enter to submit
     submit() {
       switch (this.getInput) {
         case "help":
-          this.display.push("What can I do for you?");
+          this.getLogs.push("Available commands: 'help', 'ls'.");
           break;
-        case "demo":
-          this.display.push("Hey, this is a demo!");
+        case "ls":
+          this.getLogs.push(Object.keys(this.$store.state.files));
           break;
         default:
-          this.display.push(this.getInput);
+          this.getLogs.push(this.getInput);
           break;
       }
       this.getInput = "";
