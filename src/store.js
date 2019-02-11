@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentPath: "/",
-    logs: ["Commands availables : cd, ls"],
+    logs: ["Commands availables : cd, touch, mkdir"],
     input: "",
     files: {
       dir1: ["file1", "file2"],
@@ -22,6 +22,9 @@ export default new Vuex.Store({
     },
     CURRENTPATH_COMMIT(state, payload) {
       state.currentPath = payload;
+    },
+    PARENT_COMMIT(state, payload) {
+      state.parent = payload;
     }
   },
   actions: {}

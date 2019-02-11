@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>{{ this.$store.state.files }}</p>
     <Logs/>
     <span class="input">>
       <p>{{ getCurrentPath }}</p>
@@ -10,11 +11,13 @@
 
 <script>
 import Logs from "./Logs";
+import { getCurves } from "crypto";
 
 export default {
   components: {
     Logs
   },
+
   computed: {
     // Get what's typed
     getInput: {
@@ -25,6 +28,7 @@ export default {
         this.$store.commit("INPUT_COMMIT", value);
       }
     },
+
     // Get what displayed on the logs
     getLogs: {
       get() {
@@ -34,6 +38,7 @@ export default {
         this.$store.commit("LOGS_COMMIT", value);
       }
     },
+
     // Get what displayed on the logs
     getCurrentPath: {
       get() {
@@ -44,34 +49,36 @@ export default {
       }
     }
   },
+
   methods: {
     // When the user is pressing enter to submit
     submit() {
       let vm = this;
       let directories = this.$store.state.files;
-      let parentDirectory = "/";
 
       // Navigation
       Object.keys(directories).forEach(function(element) {
         switch (vm.getInput) {
-          case "cd " + element:
-            console.log(`You typed cd ${element}`);
-            vm.getCurrentPath = `/${element}`;
-            break;
           case "cd /":
-            console.log(`You typed cd /`);
-            vm.getCurrentPath = `/`;
+            vm.getCurrentPath = "/";
             break;
           case "cd ..":
           case "cd":
-            console.log(`You typed cd ..`);
-            vm.getCurrentPath = parentDirectory;
+            vm.getCurrentPath = "/";
+            break;
+          case "cd " + element:
+            vm.getCurrentPath = `${element}`;
             break;
         }
       });
+
       // Creation
       if (vm.getInput.startsWith("mkdir ")) {
-        // Create a dir
+        let toCreate = vm.getInput.replace("mkdir ", "");
+        directories[toCreate] = [];
+      } else if (vm.getInput.startsWith("touch ")) {
+        let toCreate = vm.getInput.replace("touch ", "");
+        directories[vm.getCurrentPath.replace("/", "")].push(toCreate);
       }
 
       this.getInput = "";
