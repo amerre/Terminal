@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    currentPath: "/",
     logs: ["This is the logs"],
     input: "",
     files: {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     LOGS_COMMIT(state, payload) {
       state.logs = payload;
+    },
+    CURRENTPATH_COMMIT(state, payload) {
+      state.currentPath = payload;
     }
   },
   actions: {}
