@@ -5,14 +5,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentPath: "/",
-    logs: ["Commands availables : cd, touch, mkdir"],
+    currentPath: "dir1",
+    // logs: ["Commands availables : cd, touch, mkdir"],
     input: "",
-    files: {
-      dir1: ["file1", "file2"],
-      dir2: ["file1"]
+    files: ["testing"],
+    folders: {
+      dir1: { files: ["file1", "file2"], folders: ["folder"] },
+      dir2: { files: ["file1"], folders: [] }
     }
   },
+
   mutations: {
     INPUT_COMMIT(state, payload) {
       state.input = payload;

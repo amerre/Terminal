@@ -1,6 +1,14 @@
 <template>
   <div>
-    <p>{{ this.$store.state.files }}</p>
+    <p
+      style="color:purple; lineHeight:28px;"
+      v-for="(dir,index) in this.$store.state"
+      v-bind:key="index"
+    >
+      {{ index }} - {{ dir }}
+      <br>
+      <br>
+    </p>
     <Logs/>
     <span class="input">>
       <p>{{ getCurrentPath }}</p>
@@ -11,13 +19,10 @@
 
 <script>
 import Logs from "./Logs";
-import { getCurves } from "crypto";
-
 export default {
   components: {
     Logs
   },
-
   computed: {
     // Get what's typed
     getInput: {
@@ -28,7 +33,6 @@ export default {
         this.$store.commit("INPUT_COMMIT", value);
       }
     },
-
     // Get what displayed on the logs
     getLogs: {
       get() {
@@ -38,7 +42,6 @@ export default {
         this.$store.commit("LOGS_COMMIT", value);
       }
     },
-
     // Get what displayed on the logs
     getCurrentPath: {
       get() {
@@ -49,22 +52,20 @@ export default {
       }
     }
   },
-
   methods: {
-    // When the user is pressing enter to submit
     submit() {
       let vm = this;
-      let directories = this.$store.state.files;
+      let directories = this.$store.state.folders;
 
       // Navigation
       Object.keys(directories).forEach(function(element) {
         switch (vm.getInput) {
           case "cd /":
-            vm.getCurrentPath = "/";
+            vm.getCurrentPath = "";
             break;
           case "cd ..":
           case "cd":
-            vm.getCurrentPath = "/";
+            vm.getCurrentPath = "";
             break;
           case "cd " + element:
             vm.getCurrentPath = `${element}`;
@@ -72,15 +73,28 @@ export default {
         }
       });
 
-      // Creation
+      // Creation d'un dossier
       if (vm.getInput.startsWith("mkdir ")) {
         let toCreate = vm.getInput.replace("mkdir ", "");
-        directories[toCreate] = [];
-      } else if (vm.getInput.startsWith("touch ")) {
-        let toCreate = vm.getInput.replace("touch ", "");
-        directories[vm.getCurrentPath.replace("/", "")].push(toCreate);
+        if (vm.getCurrentPath != "") {
+          directories[vm.getCurrentPath].folders.push(toCreate);
+        } else {
+          directories[toCreate] = {
+            files: [],
+            folders: []
+          };
+        }
       }
 
+      // Creation d'un fichier
+      if (vm.getInput.startsWith("touch ")) {
+        let toCreate = vm.getInput.replace("touch ", "");
+        if (vm.getCurrentPath != "") {
+          directories[vm.getCurrentPath].files.push(toCreate);
+        } else {
+          this.$store.state.files.push(toCreate);
+        }
+      }
       this.getInput = "";
     }
   }
