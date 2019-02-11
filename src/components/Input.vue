@@ -47,51 +47,17 @@ export default {
   methods: {
     // When the user is pressing enter to submit
     submit() {
-      let path = this.getCurrentPath;
-      // --------------
-      if (path === "/") {
-        switch (this.getInput) {
-          case "ls":
-            this.getLogs.push(Object.keys(this.$store.state.files));
-            break;
-          case "cd dir1":
-            this.getCurrentPath = "/dir1";
-            break;
-          case "cd dir2":
-            this.getCurrentPath = "/dir2";
-            break;
+      let vm = this;
+      let directories = this.$store.state.files;
+
+      Object.keys(directories).forEach(function(element) {
+        if (vm.getInput === "cd " + element) {
+          console.log(`You typed cd ${element}`);
+        } else if (vm.getInput === "cd /") {
+          console.log(`You typed cd /`);
         }
-        // --------------
-      } else if (path === "/dir1") {
-        switch (this.getInput) {
-          case "ls":
-            this.getLogs.push(this.$store.state.files.dir1);
-            break;
-          case "cd /":
-          case "cd ..":
-          case "cd":
-            this.getCurrentPath = "/";
-            break;
-          case "cd dir2":
-            this.getCurrentPath = "/dir2";
-            break;
-        }
-        // --------------
-      } else if (path === "/dir2") {
-        switch (this.getInput) {
-          case "ls":
-            this.getLogs.push(this.$store.state.files.dir2);
-            break;
-          case "cd /":
-          case "cd ..":
-          case "cd":
-            this.getCurrentPath = "/";
-            break;
-          case "cd dir1":
-            this.getCurrentPath = "/dir1";
-            break;
-        }
-      }
+      });
+
       this.getInput = "";
     }
   }
