@@ -5,8 +5,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentPath: "dir1",
-    // logs: ["Commands availables : cd, touch, mkdir"],
+    currentPath: "",
+    logs: ["Type help to see availables commands"],
+    helpMsg:
+      "Hi! Here you can navigate between files (cd), create directories (mkdir) and create files (touch). Right now you can't navigate inside nested files, but I'm working on it!",
     input: "",
     files: ["testing"],
     folders: {

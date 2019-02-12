@@ -1,14 +1,5 @@
 <template>
   <div>
-    <p
-      style="color:purple; lineHeight:28px;"
-      v-for="(dir,index) in this.$store.state"
-      v-bind:key="index"
-    >
-      {{ index }} - {{ dir }}
-      <br>
-      <br>
-    </p>
     <Logs/>
     <span class="input">>
       <p>{{ getCurrentPath }}</p>
@@ -64,7 +55,9 @@ export default {
             vm.getCurrentPath = "";
             break;
           case "cd ..":
+          case "cd..":
           case "cd":
+          case "cd ":
             vm.getCurrentPath = "";
             break;
           case "cd " + element:
@@ -95,6 +88,12 @@ export default {
           this.$store.state.files.push(toCreate);
         }
       }
+
+      // Demande d'aide
+      if (vm.getInput.startsWith("help")) {
+        vm.getLogs.push(this.$store.state.helpMsg);
+      }
+
       this.getInput = "";
     }
   }
