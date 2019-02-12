@@ -10,9 +10,9 @@ export default new Vuex.Store({
     helpMsg:
       "Hi! Here you can navigate between files (cd), create directories (mkdir) and create files (touch). Right now you can't navigate inside nested files, but I'm working on it!",
     input: "",
-    files: ["testing"],
+    files: ["file1"],
     folders: {
-      dir1: { files: ["file1", "file2"], folders: ["folder"] },
+      dir1: { files: ["file1", "file2"], folders: ["fold1"] },
       dir2: { files: ["file1"], folders: [] }
     }
   },
